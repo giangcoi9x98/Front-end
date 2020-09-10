@@ -2,10 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { SnackbarProvider } from 'notistack'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SnackbarProvider>
+      <App />
+    </SnackbarProvider>
+    {/* // ?? snackbar */}
   </React.StrictMode>,
   document.getElementById('root')
 );

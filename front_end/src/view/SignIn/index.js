@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 
-export default class NotFound extends Comment {
+export default class SignIn extends Component {
     constructor(props) {
         super();
         this.state = {
+
         }
     }
     render() {
         return <div>
-            <h2>Trang khong ton tai</h2>
+            <h2>Trang Dang nhap</h2>
         </div>
     }
 }
