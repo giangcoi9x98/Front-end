@@ -17,7 +17,7 @@ export default class Product extends Component {
   render() {
     return (
       <div>
-        <Card style={{ margin: 5 }}>
+        <Card style={{ margin: 5 ,minHeight:450}}>
     <CardMedia  > <img src={this.props.product.imageUrl}></img></CardMedia>
           <CardContent>
             <Typography

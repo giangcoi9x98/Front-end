@@ -70,13 +70,6 @@ class HomePage extends React.Component {
   render() {
     return (
       <div >
-        <Typography>Total: {this.state.total}</Typography>
-        <Typography>Page: {this.state.page}</Typography>
-        <Typography>Size: {this.state.size}</Typography>
-        <Typography>
-          paging: {this.state.page} -{' '}
-          {Math.ceil(this.state.total / this.state.size)}{' '}
-        </Typography>
         <Grid container  >
           <Grid style={{ flexDirection: 'row', display: 'flex',flexWrap:'wrap' }}   >
             {this.state.listProduct.map(product => 
