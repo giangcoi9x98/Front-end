@@ -10,47 +10,55 @@ import {
     Divider,
     Grid,
 } from '@material-ui/core'
-import CategoryId from './CategoryId'
+import Category from '../../component/Category'
 import api from '../../api'
 import {
     Link,
 } from 'react-router-dom'
 
 
-import { withSnackbar, SnackbarProvider } from 'notistack';
-class SideBar extends React.Component {
+export default class SideBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            listCategoryId: []
+            listCategoryId: [],
+            page: 1,
+            size:10
         }
     }
 
     fetchData = async () => {
-        const res = await api.category.getAllcategoryId();
-        if (res.status) {
-            this.setState({
-                listCategoryId: res.data.data
-            })
-        } else {
-            console.log('props: ', this.props);
-            console.log(res.message);
-            this.props.enqueueSnackbar(res.message, { variant: 'error' })
+        try {
+            const
+                res = await api.category.getAllcategoryId({
+                page: this.state.page,
+                size: this.state.size
+            });
+          
+            if (res.status) {
+                await this.setState({
+                    listCategoryId: res.data.data
+                })
+                console.log(" category", this.state.listCategoryId);
+            }
+        } catch (error) {
+            console.log(error);
+            }
+       
         }
-    }
 
     async componentDidMount() {
         await this.fetchData();
     }
     render() {
         return (
-            <div style={{ flexFlow: "row" }}>
+            <div style={{paddingTop:20}}>
                 {this.state.listCategoryId.map(
-                    (category) => <CategoryId category={category}></CategoryId>
+                    (category) => <Category category={category}></Category>
                 )}
             </div>
         )
     }
 }
 
-export default withSnackbar(SideBar)
+

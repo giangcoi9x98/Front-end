@@ -2,8 +2,11 @@ import API from './api';
 
 export const getAllcategoryId = async () => {
   try {
-    const res = await API.get('/parameter/list-category-id');
+    const res = await API.get('/category'
+     
+    );
     return {
+      
       status: true,
       data: res.data,
     };
