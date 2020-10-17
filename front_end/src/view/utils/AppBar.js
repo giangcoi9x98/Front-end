@@ -1,4 +1,4 @@
-import React ,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,29 +8,24 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import {
-  Home as HomeIcon
-} from '@material-ui/icons'
-import {Button, Drawer,Link as LogOut} from '@material-ui/core'
+import { Home as HomeIcon } from '@material-ui/icons';
+import { Button, Drawer, Link as LogOut } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
- import Cookie from 'js-cookie'
+import Cookie from 'js-cookie';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-// import {Link} from '@material-ui/core'
-import {Link} from 'react-router-dom'
-import Axios from 'axios'
-import API from '../../api/api'
+import { Link } from 'react-router-dom';
+import Axios from 'axios';
+import API from '../../api/api';
 import { logIn } from '../../api/auth';
-import Home from '../HomePage/index'
-import SideBar from '../SideBar/index'
+import Home from '../HomePage/index';
+import SideBar from '../SideBar/index';
 const useStyles = makeStyles((theme) => ({
   grow: {
-   
     flexGrow: 1,
- 
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -42,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   search: {
-    
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -93,45 +87,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-const SearchAppBar = ({ isShowSideBar,isAdmin,test}) => {
+const SearchAppBar = ({ isShowSideBar, isAdmin, test }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [isLogin,setIsLogin]=useState('Sign In');
-  const handleIsLogin = () =>{
-    setIsLogin('Sign Up')
-    
-  }  
-  
-  const handleSignUp =()=>{
-    Cookie.remove('token')
-    window.location = "/";
-     
-  }   
+  const [isLogin, setIsLogin] = useState('Sign In');
+  const handleIsLogin = () => {
+    setIsLogin('Sign Up');
+  };
+
+  const handleSignUp = () => {
+    Cookie.remove('token');
+    window.location = '/';
+  };
   const handleAccount = () => {
-    window.location='/me'
-  }
-  const Url ="http://localhost:7000/api/v1/me";
-  useEffect(()=>{
+    window.location = '/me';
+  };
+  const Url = 'http://localhost:7000/api/v1/me';
+  useEffect(() => {
     const fetchData = async () => {
-      
-    try {
-         const result = await API.get(Url);
-      if(result.status===200){
-        handleIsLogin()
+      try {
+        const result = await API.get(Url);
+        if (result.status === 200) {
+          handleIsLogin();
+        }
+        if (result.data.data.role === 'ADMIN') {
+          isAdmin();
+        }
+      } catch (error) {
+        console.log(error);
       }
-      if (result.data.data.role === 'ADMIN') {
-        isAdmin()
-      }
-    } catch (error) {
-      console.log(error);
-    }
     };
-    
+
     fetchData();
-  },[]);
- 
+  }, []);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -151,7 +140,6 @@ const SearchAppBar = ({ isShowSideBar,isAdmin,test}) => {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
-
   };
 
   const menuId = 'primary-search-account-menu';
@@ -165,15 +153,18 @@ const SearchAppBar = ({ isShowSideBar,isAdmin,test}) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Link onClick={handleAccount} style={{textDecoration:'none',color:'black'}}>
-        <MenuItem onClick={handleMenuClose}>
-        Profile
-      </MenuItem>
+      <Link
+        onClick={handleAccount}
+        style={{ textDecoration: 'none', color: 'black' }}
+      >
+        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       </Link>
-     <Link onClick={handleSignUp} style={{color:'black',textDecoration:'none'}}  >
-     <MenuItem onClick={handleMenuClose} 
-     > {isLogin }</MenuItem>
-     </Link>
+      <Link
+        onClick={handleSignUp}
+        style={{ color: 'black', textDecoration: 'none' }}
+      >
+        <MenuItem onClick={handleMenuClose}> {isLogin}</MenuItem>
+      </Link>
     </Menu>
   );
 
@@ -187,14 +178,12 @@ const SearchAppBar = ({ isShowSideBar,isAdmin,test}) => {
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-     
     >
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={5} color="secondary">
             <MailIcon />
-          </Badge>   
-
+          </Badge>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
@@ -214,15 +203,15 @@ const SearchAppBar = ({ isShowSideBar,isAdmin,test}) => {
           color="inherit"
         >
           <AccountCircle />
-        </IconButton >
-        <p >Profile</p>
+        </IconButton>
+        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
 
   return (
-    <div style={{display:'flex'}} >
-      <AppBar >
+    <div style={{ display: 'flex' }}>
+      <AppBar>
         <Toolbar>
           <IconButton
             edge="start"
@@ -230,20 +219,20 @@ const SearchAppBar = ({ isShowSideBar,isAdmin,test}) => {
             color="inherit"
             aria-label="open drawer"
             onClick={isShowSideBar}
-            
           >
             <MenuIcon />
           </IconButton>
-       
-     <Link to="/"
-     >
-     <IconButton classes={classes.menuButton}
-            color="inherit"
-            edge="start"
-            aria-label="open drawer">
-                <HomeIcon  style={{color:'white'}}></HomeIcon>
-     </IconButton>
-     </Link>
+
+          <Link to="/">
+            <IconButton
+              classes={classes.menuButton}
+              color="inherit"
+              edge="start"
+              aria-label="open drawer"
+            >
+              <HomeIcon style={{ color: 'white' }}></HomeIcon>
+            </IconButton>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -293,13 +282,10 @@ const SearchAppBar = ({ isShowSideBar,isAdmin,test}) => {
           </div>
         </Toolbar>
       </AppBar>
-             
-    
+
       {renderMobileMenu}
       {renderMenu}
-
     </div>
-  
   );
- }
-export default SearchAppBar
+};
+export default SearchAppBar;

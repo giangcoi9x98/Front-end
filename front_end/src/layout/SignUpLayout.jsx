@@ -5,8 +5,7 @@ import SeacrchAppBar from '../view/utils/AppBar'
 export default class SignUpLayout extends Component {
     render() {
         return (
-            <div style={{flex:1,height:'100%'}}> 
-                
+            <div style={{flex:1,height:'100%'}}>               
                 <main style={{flexDirection:'column',height:'100%'}}> 
                     <SeacrchAppBar></SeacrchAppBar>
                     {this.props.children}

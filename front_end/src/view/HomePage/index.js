@@ -1,4 +1,4 @@
-import React ,{Component} from 'react';
+import React, { Component } from 'react';
 import {
   makeStyles,
   Typography,
@@ -9,19 +9,19 @@ import {
   Button,
   Divider,
   Grid,
-  
-  Hidden, Drawer, Box
+  Hidden,
+  Drawer,
+  Box,
 } from '@material-ui/core';
-import {Pagination} from '@material-ui/lab'
+import { Pagination } from '@material-ui/lab';
 import api from '../../api';
-import SideBar from '../SideBar/index'
-import AdminSideBar from '../Admin/SideBar/index'
+import SideBar from '../SideBar/index';
+import AdminSideBar from '../Admin/SideBar/index';
 import { withSnackbar, SnackbarProvider } from 'notistack';
 import Product from './Product';
-import TopBar from '../utils/AppBar'
+import TopBar from '../utils/AppBar';
 
-
- class HomePage extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,10 +32,10 @@ import TopBar from '../utils/AppBar'
       isShowSideBar: false,
       isCloseSideBar: true,
       isAdmin: false,
-      test:'giang'
+      test: 'giang',
     };
   }
-  
+
   async fetchData() {
     const res = await api.product.getAllProduct({
       page: this.state.page,
@@ -43,21 +43,20 @@ import TopBar from '../utils/AppBar'
     });
     console.log(res);
 
-  
     if (res.status) {
       this.setState({
         listProduct: res.data.data,
         total: res.data.metadata.total.total,
       });
-      console.log('prodcut',this.state.listProduct);
+      console.log('prodcut', this.state.listProduct);
     } else {
       console.log('props: ', this.props);
-     
     }
   }
-   isCloseSideBar =async () => {
-    await this.setState({isShowSideBar:false})
-  }
+
+  isCloseSideBar = async () => {
+    await this.setState({ isShowSideBar: false });
+  };
   async componentDidMount() {
     await this.fetchData(); //?
   }
@@ -66,76 +65,73 @@ import TopBar from '../utils/AppBar'
   //        page:value
   //      })
   //    await this.fetchData();
-  // } 
-   //Khi dung phai bind() =)))
-   
-   handlePageChange = async (event,value) => {
-     await this.setState({
-       page:value
-     })
-     await this.fetchData()
-   }
-  
-   render() {
-     console.log("test",this.state.test);
-     const isAdmin = this.state.isAdmin;
-     let sidebar;
-     if (isAdmin===true) {
-       sidebar=<AdminSideBar></AdminSideBar>
-       
-     } else {
-       sidebar=<SideBar></SideBar>
-     }
+  // }
+  //Khi dung phai bind() =)))
+
+  handlePageChange = async (event, value) => {
+    await this.setState({
+      page: value,
+    });
+    await this.fetchData();
+  };
+
+  render() {
+    console.log('test', this.state.test);
+    const isAdmin = this.state.isAdmin;
+    let sidebar;
+    if (isAdmin === true) {
+      sidebar = <AdminSideBar></AdminSideBar>;
+    } else {
+      sidebar = <SideBar></SideBar>;
+    }
     return (
       <div>
         <TopBar
           isShowSideBar={() => this.setState({ isShowSideBar: true })}
           isAdmin={() => this.setState({ isAdmin: true })}
-          test={(name)=>this.setState({test: name})}
-        >
-
-        </TopBar>
-         <div style={{display:'flex'}}>
+          test={(name) => this.setState({ test: name })}
+        ></TopBar>
+        <div style={{ display: 'flex' }}>
           <div style={{}}>
-             <Hidden lgUp>
-          <Drawer
+            <Hidden lgUp>
+              <Drawer
                 open={this.state.isShowSideBar}
                 onClose={this.isCloseSideBar}
-            >
+              >
                 {sidebar}
-               
-            </Drawer>
-          </Hidden>
-           <Hidden mdDown>
-              {sidebar}
-
+              </Drawer>
             </Hidden>
-           
-           </div>
-        <div style={{ flexDirection: 'column', display: 'flex'}}>
-          <Grid container >
-          <Grid style={{ flexDirection: 'row', display: 'flex',flexWrap:'wrap',}}   >
-            {this.state.listProduct.map(product => 
-            {
-                return <Grid item xs ={12} sm ={6} md={3} >
-                    <Product  product={product} ></Product>
-                    </Grid>   
-            })}
-          </Grid>
-        
-        </Grid>
-
-       
-      </div>
+            <Hidden mdDown>{sidebar}</Hidden>
+          </div>
+          <div style={{ flexDirection: 'column', display: 'flex' }}>
+            <Grid container>
+              <Grid
+                style={{
+                  flexDirection: 'row',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                }}
+              >
+                {this.state.listProduct.map((product) => {
+                  return (
+                    <Grid item xs={12} sm={6} md={3}>
+                      <Product product={product}></Product>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </Grid>
+          </div>
         </div>
-        <Box  mt={3} style={{justifyContent:'center',display:'flex'}}>
-          <Pagination color='primary' 
-            count={Math.ceil(this.state.total / this.state.size)} size='small'
-            onChange={this.handlePageChange} >
-
-          </Pagination>
+        <Box mt={3} style={{ justifyContent: 'center', display: 'flex' }}>
+          <Pagination
+            color="primary"
+            count={Math.ceil(this.state.total / this.state.size)}
+            size="small"
+            onChange={this.handlePageChange}
+          ></Pagination>
         </Box>
-     </div>
+      </div>
     );
   }
 }

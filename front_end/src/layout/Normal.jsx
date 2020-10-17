@@ -5,8 +5,7 @@ import SideBar from '../view/SideBar/index'
 export default class Normal extends Component {
     render() {
         return (
-            <div style={{ flex: 1, display: 'flex', paddingTop: 50 }}>
-                
+            <div style={{ flex: 1, display: 'flex', paddingTop: 50 }}> 
                 <main style={{ display: 'flex' }}>
                      {this.props.children}
                 </main>

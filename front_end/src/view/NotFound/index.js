@@ -8,7 +8,8 @@ export default class NotFound extends Component {
     }
     render() {
         return <div>
-            <h2>Trang khong ton tai</h2>
+            <h2>
+                Trang khong ton tai</h2>
         </div>
     }
 }

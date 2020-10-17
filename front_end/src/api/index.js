@@ -7,5 +7,5 @@ export default {
   product,
   category,
   auth,
-  account
+  account,
 };

@@ -1,14 +1,11 @@
 import API from './api';
 
-export const logIn = async ({username,password}) => {
+export const logIn = async ({ username, password }) => {
   try {
-    const res = await API.post('/signin',{
-      username:username,
-      password:password
-    }
-    
-    
-    );
+    const res = await API.post('/signin', {
+      username: username,
+      password: password,
+    });
     return {
       status: true,
       data: res.data,
